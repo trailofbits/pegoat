@@ -38,13 +38,13 @@ add_executable(pegoat-no-cfg goat.cpp)
 target_compile_options(pegoat-no-cfg PRIVATE "/GUARD:NO")
 
 # An executable with INEFFECTIVE control flow guards, as ASLR is disabled.
-add_executable(pegoat-ineffective-cfg-no-dynamicbase)
+add_executable(pegoat-ineffective-cfg-no-dynamicbase goat.cpp)
 target_compile_options(pegoat-ineffective-cfg-no-dynamicbase PRIVATE "/GUARD:CF" "/DYNAMICBASE:NO")
 
 # An executable with no load-time integrity checks.
-add_executable(pegoat-no-integritycheck)
+add_executable(pegoat-no-integritycheck goat.cpp)
 target_compile_options(pegoat-no-integritycheck PRIVATE "/INTEGRITYCHECK:NO")
 
 # An executable with safe structured exception handling disabled.
-add_executable(pegoat-no-safeseh)
+add_executable(pegoat-no-safeseh goat.cpp)
 target_compile_options(pegoat-no-safeseh PRIVATE "/SAFESEH:NO")
