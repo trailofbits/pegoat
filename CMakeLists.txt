@@ -15,15 +15,17 @@ target_compile_options(pegoat-no-gs PRIVATE "/GS-")
 add_executable(pegoat-no-dynamicbase goat.cpp)
 target_link_options(pegoat-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
 
-# An executable with INEFFECTIVE ASLR, as a fixed base address is specified.
-add_executable(pegoard-ineffective-dynamicbase goat.cpp)
-target_link_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
+# # An executable with INEFFECTIVE ASLR, as a fixed base address is specified.
+# add_executable(pegoard-ineffective-dynamicbase goat.cpp)
+# target_link_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
 
-# An executable with ASLR, but not 64-bit aware ASLR.
-add_executable(pegoat-no-highentropyva goat.cpp)
-target_link_options(
-    pegoat-no-highentropyva PRIVATE "/DYNAMICBASE" "/HIGHENTROPYVA:NO"
-)
+if("{CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
+    # An executable with ASLR, but not 64-bit aware ASLR.
+    add_executable(pegoat-no-highentropyva goat.cpp)
+    target_link_options(
+        pegoat-no-highentropyva PRIVATE "/DYNAMICBASE" "/HIGHENTROPYVA:NO"
+    )
+endif()
 
 # An executable without NX (a/k/a DEP, a/k/a W^X).
 add_executable(pegoat-no-nxcompat goat.cpp)
