@@ -6,7 +6,7 @@ endif()
 
 project(pegoat)
 
-add_executable(pegoat-vanilla goat.cpp)
+add_executable(pegoat goat.cpp)
 
 # An executable with no stack guards.
 add_executable(pegoat-no-gs goat.cpp)
