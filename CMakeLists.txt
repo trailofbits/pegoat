@@ -22,7 +22,7 @@ target_compile_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/
 # An executable with ASLR, but not 64-bit aware ASLR.
 add_executable(pegoat-no-highentropyva goat.cpp)
 target_compile_options(
-    pegoat-no-dynamicbase-no-highentropyva PRIVATE "/DYNAMICBASE" "/HIGHENTROPYVA:NO"
+    pegoat-no-highentropyva PRIVATE "/DYNAMICBASE" "/HIGHENTROPYVA:NO"
 )
 
 # An executable without NX (a/k/a DEP, a/k/a W^X).
