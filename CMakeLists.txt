@@ -13,25 +13,25 @@ target_compile_options(pegoat-no-gs PRIVATE "/GS-")
 
 # An executable with no ASLR.
 add_executable(pegoat-no-dynamicbase goat.cpp)
-target_compile_options(pegoat-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
+target_link_options(pegoat-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
 
 # An executable with INEFFECTIVE ASLR, as a fixed base address is specified.
 add_executable(pegoard-ineffective-dynamicbase goat.cpp)
-target_compile_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
+target_link_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
 
 # An executable with ASLR, but not 64-bit aware ASLR.
 add_executable(pegoat-no-highentropyva goat.cpp)
-target_compile_options(
+target_link_options(
     pegoat-no-highentropyva PRIVATE "/DYNAMICBASE" "/HIGHENTROPYVA:NO"
 )
 
 # An executable without NX (a/k/a DEP, a/k/a W^X).
 add_executable(pegoat-no-nxcompat goat.cpp)
-target_compile_options(pegoat-no-nxcompat PRIVATE "/NXCOMPAT:NO")
+target_link_options(pegoat-no-nxcompat PRIVATE "/NXCOMPAT:NO")
 
 # An executable without Intel CET (hardware CFI) compatiblity.
 add_executable(pegoat-no-cetcompat goat.cpp)
-target_compile_options(pegoat-no-cetcompat PRIVATE "/CETCOMPAT:NO")
+target_link_options(pegoat-no-cetcompat PRIVATE "/CETCOMPAT:NO")
 
 # An executable without control flow guards.
 add_executable(pegoat-no-cfg goat.cpp)
@@ -39,7 +39,8 @@ target_compile_options(pegoat-no-cfg PRIVATE "/GUARD:NO")
 
 # An executable with INEFFECTIVE control flow guards, as ASLR is disabled.
 add_executable(pegoat-ineffective-cfg-no-dynamicbase goat.cpp)
-target_compile_options(pegoat-ineffective-cfg-no-dynamicbase PRIVATE "/GUARD:CF" "/DYNAMICBASE:NO")
+target_compile_options(pegoat-ineffective-cfg-no-dynamicbase PRIVATE "/GUARD:CF")
+target_link_options(pegoat-ineffective-cfg-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
 
 # An executable with no load-time integrity checks.
 add_executable(pegoat-no-integritycheck goat.cpp)
@@ -47,4 +48,4 @@ target_compile_options(pegoat-no-integritycheck PRIVATE "/INTEGRITYCHECK:NO")
 
 # An executable with safe structured exception handling disabled.
 add_executable(pegoat-no-safeseh goat.cpp)
-target_compile_options(pegoat-no-safeseh PRIVATE "/SAFESEH:NO")
+target_link_options(pegoat-no-safeseh PRIVATE "/SAFESEH:NO")
