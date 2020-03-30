@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  schedule:
+    # run CI every day even if no PRs/merges occur
+    - cron:  '0 12 * * *'
+
+jobs:
+  windows:
+    strategy:
+      matrix:
+        architecture: ["x64", "Win32"]
+        build-type: ["Debug", "Release"]
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: build
+      run: |
+        mkdir build
+        cd build
+        cmake -G "Visual Studio 16 2019" -A ${{ matrix.architecture }} ..
+        cmake --build . --config ${{ matrix.build-type }}
