@@ -15,7 +15,10 @@ target_compile_options(pegoat-no-gs PRIVATE "/GS-")
 add_executable(pegoat-no-dynamicbase goat.cpp)
 target_link_options(pegoat-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
 
-# # An executable with INEFFECTIVE ASLR, as a fixed base address is specified.
+# TODO(ww): Craft an executable that has both /DYNAMICBASE and IMAGE_FILE_RELOCS_STRIPPED.
+# /FIXED below *would* do it, but the linker is smart enough to realize that
+# the two are in conflict and errors out.
+
 # add_executable(pegoard-ineffective-dynamicbase goat.cpp)
 # target_link_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
 
