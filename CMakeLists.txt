@@ -1,10 +1,9 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+project(pegoat)
 
 if(NOT MSVC)
     message(FATAL_ERROR "pegoat can only be built on Windows")
 endif()
-
-project(pegoat)
 
 add_executable(pegoat goat.cpp)
 
