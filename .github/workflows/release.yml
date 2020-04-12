@@ -10,50 +10,50 @@ jobs:
     name: upload release assets
     runs-on: windows-latest
     steps:
-        uses: actions/checkout@v2
-      - name: build32
-        run: |
-          mkdir build32
-          cd build32
-          cmake -G "Visual Studio 16 2019" -A Win32 ..
-          cmake --build . --config Release
-      - name: build64
-        run: |
-          mkdir build64
-          cd build64
-          cmake -G "Visual Studio 16 2019" -A x64 ..
-          cmake --build . --config Release
-      - name: archive
-        run: |
-          7z a build32.zip ./build32
-          7z a build64.zip ./build64
-      - name: create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: upload32
-        id: build32
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build32.zip
-          asset_name: build32.zip
-          asset_content_type: application/zip
-      - name: upload64
-        id: build64
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build64.zip
-          asset_name: build64.zip
-          asset_content_type: application/zip
+    - uses: actions/checkout@v2
+    - name: build32
+      run: |
+        mkdir build32
+        cd build32
+        cmake -G "Visual Studio 16 2019" -A Win32 ..
+        cmake --build . --config Release
+    - name: build64
+      run: |
+        mkdir build64
+        cd build64
+        cmake -G "Visual Studio 16 2019" -A x64 ..
+        cmake --build . --config Release
+    - name: archive
+      run: |
+        7z a build32.zip ./build32
+        7z a build64.zip ./build64
+    - name: create release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: upload32
+      id: build32
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build32.zip
+        asset_name: build32.zip
+        asset_content_type: application/zip
+    - name: upload64
+      id: build64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./build64.zip
+        asset_name: build64.zip
+        asset_content_type: application/zip
