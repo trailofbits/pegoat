@@ -13,11 +13,11 @@ Export-Certificate `
 
 Import-Certificate `
   -FilePath .\code_signing.crt `
-  -Cert Cert:\CurrentUser\TrustedPublisher
+  -Cert Cert:\LocalMachine\TrustedPublisher
 
 Import-Certificate `
   -FilePath .\code_signing.crt `
-  -Cert Cert:\CurrentUser\Root
+  -Cert Cert:\LocalMachine\Root
 
 Set-AuthenticodeSignature `
   $args[0] `
