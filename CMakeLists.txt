@@ -22,7 +22,7 @@ target_link_options(pegoat-no-dynamicbase PRIVATE "/DYNAMICBASE:NO")
 # add_executable(pegoard-ineffective-dynamicbase goat.cpp)
 # target_link_options(pegoard-ineffective-dynamicbase PRIVATE "/DYNAMICBASE" "/FIXED")
 
-if("{CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
+if("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "x64")
     # An executable with ASLR, but not 64-bit aware ASLR.
     add_executable(pegoat-no-highentropyva goat.cpp)
     target_link_options(
@@ -54,3 +54,14 @@ target_compile_options(pegoat-no-integritycheck PRIVATE "/INTEGRITYCHECK:NO")
 # An executable with safe structured exception handling disabled.
 add_executable(pegoat-no-safeseh goat.cpp)
 target_link_options(pegoat-no-safeseh PRIVATE "/SAFESEH:NO")
+
+# An executable with an (self-signed) Authenticode signature.
+add_executable(pegoat-authenticode goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-authenticode
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  powershell -ExecutionPolicy Bypass -File sign.ps1 $<TARGET_FILE:pegoat-authenticode>
+)
