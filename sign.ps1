@@ -21,4 +21,4 @@ Import-Certificate `
 
 Set-AuthenticodeSignature `
   $args[0] `
-  -Certificate (Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert)
+  -Certificate (Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert)[0]
