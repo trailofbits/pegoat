@@ -42,6 +42,10 @@ target_link_options(pegoat-no-cetcompat PRIVATE "/CETCOMPAT:NO")
 add_executable(pegoat-no-cfg goat.cpp)
 target_compile_options(pegoat-no-cfg PRIVATE "/GUARD:NO")
 
+# An executable control flow guards explicitly enabled.
+add_executable(pegoat-yes-cfg goat.cpp)
+target_compile_options(pegoat-yes-cfg PRIVATE "/GUARD:CF")
+
 # An executable with INEFFECTIVE control flow guards, as ASLR is disabled.
 add_executable(pegoat-ineffective-cfg-no-dynamicbase goat.cpp)
 target_compile_options(pegoat-ineffective-cfg-no-dynamicbase PRIVATE "/GUARD:CF")
