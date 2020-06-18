@@ -1,6 +1,6 @@
 $cert1 = New-SelfSignedCertificate `
   -Subject "A SHA-1 cert" `
-  -DnsName "contact@trailofbits.com" `
+  -DnsName "ToB-SHA1", "trailofbits.com" `
   -HashAlgorithm SHA1 `
   -Type CodeSigning `
   -CertStoreLocation `
@@ -8,7 +8,7 @@ $cert1 = New-SelfSignedCertificate `
 
 $cert2 = New-SelfSignedCertificate `
   -Subject "A SHA-256 cert" `
-  -DnsName "contact@trailofbits.com" `
+  -DnsName "ToB-SHA256", "trailofbits.com" `
   -HashAlgorithm SHA256 `
   -Type CodeSigning `
   -CertStoreLocation `
