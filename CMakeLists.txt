@@ -70,3 +70,13 @@ add_custom_command(
   COMMAND
   powershell -ExecutionPolicy Bypass -File sign.ps1 $<TARGET_FILE:pegoat-authenticode>
 )
+
+add_executable(pegoat-authenticode-nested goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-authenticode-nested
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  powershell -ExecutionPolicy Bypass -File sign-nested.ps1 $<TARGET_FILE:pegoat-authenticode-nested>
+)
