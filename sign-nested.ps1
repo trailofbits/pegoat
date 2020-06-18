@@ -28,5 +28,6 @@ signtool.exe sign `
 
 signtool.exe sign `
   /f code_signing_2.crt `
+  /fd sha256 `
   /as `
   $args[0]
