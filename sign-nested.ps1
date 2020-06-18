@@ -1,4 +1,5 @@
 New-SelfSignedCertificate `
+  -Subject "A SHA-1 cert" `
   -DnsName "contact@trailofbits.com" `
   -HashAlgorithm SHA1 `
   -Type CodeSigning `
@@ -6,6 +7,7 @@ New-SelfSignedCertificate `
   cert:\CurrentUser\My
 
 New-SelfSignedCertificate `
+  -Subject "A SHA-256 cert" `
   -DnsName "contact@trailofbits.com" `
   -HashAlgorithm SHA256 `
   -Type CodeSigning `
