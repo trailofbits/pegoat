@@ -1,23 +1,25 @@
-New-SelfSignedCertificate `
-  -DnsName "contact@trailofbits.com" `
+$cert1 = New-SelfSignedCertificate `
+  -Subject "A SHA-1 cert" `
+  -DnsName "ToB-SHA1", "trailofbits.com" `
   -HashAlgorithm SHA1 `
   -Type CodeSigning `
   -CertStoreLocation `
   cert:\CurrentUser\My
 
-New-SelfSignedCertificate `
-  -DnsName "contact@trailofbits.com" `
+$cert2 = New-SelfSignedCertificate `
+  -Subject "A SHA-256 cert" `
+  -DnsName "ToB-SHA256", "trailofbits.com" `
   -HashAlgorithm SHA256 `
   -Type CodeSigning `
   -CertStoreLocation `
   cert:\CurrentUser\My
 
 Export-Certificate `
-  -Cert (Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert)[0] `
+  -Cert $cert1 `
   -FilePath code_signing_1.crt
 
 Export-Certificate `
-  -Cert (Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert)[1] `
+  -Cert $cert2 `
   -FilePath code_signing_2.crt
 
 signtool.exe sign `
@@ -26,5 +28,6 @@ signtool.exe sign `
 
 signtool.exe sign `
   /f code_signing_2.crt `
+  /fd sha256 `
   /as `
   $args[0]
