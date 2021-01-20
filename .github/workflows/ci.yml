@@ -5,24 +5,52 @@ on:
     branches:
       - master
   pull_request:
-  schedule:
-    # run CI every day even if no PRs/merges occur
-    - cron:  '0 12 * * *'
 
 jobs:
-  windows:
+  build:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: build32
       run: |
         mkdir build32
         cd build32
         cmake -G "Visual Studio 16 2019" -A Win32 ..
         cmake --build . --config Release
+
     - name: build64
       run: |
         mkdir build64
         cd build64
         cmake -G "Visual Studio 16 2019" -A x64 ..
         cmake --build . --config Release
+
+    - name: upload artifacts for winchecksec-scan
+      uses: actions/upload-artifact@v2
+      with:
+        name: authenticode-exes
+        path: |
+          build32/Release/pegoat-authenticode.exe
+          build32/Release/pegoat-authenticode-nested.exe
+          build64/Release/pegoat-authenticode.exe
+          build64/Release/pegoat-authenticode-nested.exe
+
+  winchecksec-scan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: get artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: authenticode-exes
+
+    - name: winchecksec
+      uses: trailofbits/winchecksec-scan@v1.0.0-pre.1
+      with:
+        paths: |
+          build32/Release/pegoat-authenticode.exe
+          build32/Release/pegoat-authenticode-nested.exe
+          build64/Release/pegoat-authenticode.exe
+          build64/Release/pegoat-authenticode-nested.exe
+        checks: authenticode
