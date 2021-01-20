@@ -27,7 +27,7 @@ jobs:
         cmake --build . --config Release
 
     - name: winchecksec
-      uses: trailofbits/winchecksec-scan@1.0.0-pre.1
+      uses: trailofbits/winchecksec-scan@v1.0.0-pre.1
       with:
         paths: |
           build32/Release/pegoat-authenticode.exe
