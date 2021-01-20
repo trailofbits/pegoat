@@ -32,9 +32,9 @@ jobs:
         name: authenticode-exes
         path: |
           build32/Release/pegoat-authenticode.exe
-          build32/Release/pegoat-authenticode-nexted.exe
+          build32/Release/pegoat-authenticode-nested.exe
           build64/Release/pegoat-authenticode.exe
-          build64/Release/pegoat-authenticode-nexted.exe
+          build64/Release/pegoat-authenticode-nested.exe
 
   winchecksec-scan:
     needs: build
@@ -50,7 +50,7 @@ jobs:
       with:
         paths: |
           build32/Release/pegoat-authenticode.exe
-          build32/Release/pegoat-authenticode-nexted.exe
+          build32/Release/pegoat-authenticode-nested.exe
           build64/Release/pegoat-authenticode.exe
-          build64/Release/pegoat-authenticode-nexted.exe
+          build64/Release/pegoat-authenticode-nested.exe
         checks: authenticode
