@@ -14,15 +14,27 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: build32
       run: |
         mkdir build32
         cd build32
         cmake -G "Visual Studio 16 2019" -A Win32 ..
         cmake --build . --config Release
+
     - name: build64
       run: |
         mkdir build64
         cd build64
         cmake -G "Visual Studio 16 2019" -A x64 ..
         cmake --build . --config Release
+
+    - name: winchecksec
+      uses: trailofbits/winchecksec-scan@1.0.0-pre.1
+      with:
+        paths: |
+          build32/Release/pegoat-authenticode.exe
+          build32/Release/pegoat-authenticode-nexted.exe
+          build64/Release/pegoat-authenticode.exe
+          build64/Release/pegoat-authenticode-nexted.exe
+        checks: authenticode
