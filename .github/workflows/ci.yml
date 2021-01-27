@@ -46,7 +46,7 @@ jobs:
         name: authenticode-exes
 
     - name: winchecksec
-      uses: trailofbits/winchecksec-scan@v1.0.0-pre.2
+      uses: trailofbits/winchecksec-scan@v1.0.0-pre.3
       with:
         paths: |
           build32/Release/pegoat-authenticode.exe
