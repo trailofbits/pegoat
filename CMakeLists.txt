@@ -38,6 +38,10 @@ target_link_options(pegoat-no-nxcompat PRIVATE "/NXCOMPAT:NO")
 add_executable(pegoat-no-cetcompat goat.cpp)
 target_link_options(pegoat-no-cetcompat PRIVATE "/CETCOMPAT:NO")
 
+# An executable with Intel CET (hardware CFI) compatiblity.
+add_executable(pegoat-cetcompat goat.cpp)
+target_link_options(pegoat-cetcompat PRIVATE "/CETCOMPAT")
+
 # An executable without control flow guards.
 add_executable(pegoat-no-cfg goat.cpp)
 target_compile_options(pegoat-no-cfg PRIVATE "/GUARD:NO")
