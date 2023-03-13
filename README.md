@@ -1,7 +1,7 @@
 pegoat
 ======
 
-[![Build Status](https://img.shields.io/github/workflow/status/trailofbits/pegoat/CI/master)](https://github.com/trailofbits/pegoat/actions?query=workflow%3ACI)
+[![CI](https://github.com/trailofbits/pegoat/actions/workflows/ci.yml/badge.svg)](https://github.com/trailofbits/pegoat/actions/workflows/ci.yml)
 
 A collection of Windows binary builds containing different (sometimes ineffective) security
 mitigations.
