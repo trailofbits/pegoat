@@ -5,6 +5,11 @@ if(NOT MSVC)
     message(FATAL_ERROR "pegoat can only be built on Windows")
 endif()
 
+find_program(PEGOAT_UPX "upx")
+if(NOT PEGOAT_UPX)
+    message(FATAL_ERROR "pegoat needs UPX")
+endif()
+
 add_executable(pegoat goat.cpp)
 
 # An executable with no stack guards.
