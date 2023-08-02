@@ -35,8 +35,8 @@ jobs:
 
     - name: archive
       run: |
-        7z a build32.zip ./build32
-        7z a build64.zip ./build64
+        7z a build32.zip ./build32/Release
+        7z a build64.zip ./build64/Release
 
     - name: upload
       uses: softprops/action-gh-release@v1
