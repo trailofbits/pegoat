@@ -99,3 +99,15 @@ add_custom_command(
   COMMAND
   upx $<TARGET_FILE:pegoat-upx-packed>
 )
+
+add_executable(pegoat-upx-packed-authenticode goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-upx-packed-authenticode
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  upx $<TARGET_FILE:pegoat-upx-packed-authenticode>
+  COMMAND
+  powershell -ExecutionPolicy Bypass -File sign.ps1 $<TARGET_FILE:pegoat-upx-packed-authenticode>
+)
