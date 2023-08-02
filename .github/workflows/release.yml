@@ -1,7 +1,7 @@
 on:
   push:
     tags:
-    - 'v*'
+      - "v*"
 
 name: release
 
@@ -9,6 +9,9 @@ jobs:
   build:
     name: upload release assets
     runs-on: windows-latest
+    permissions:
+      contents: write
+
     steps:
     - uses: actions/checkout@v2
 
@@ -35,35 +38,7 @@ jobs:
         7z a build32.zip ./build32
         7z a build64.zip ./build64
 
-    - name: create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: upload
+      uses: softprops/action-gh-release@v1
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-
-    - name: upload32
-      id: build32
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build32.zip
-        asset_name: build32.zip
-        asset_content_type: application/zip
-
-    - name: upload64
-      id: build64
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build64.zip
-        asset_name: build64.zip
-        asset_content_type: application/zip
+        files: build32.zip build64.zip
