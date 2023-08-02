@@ -89,3 +89,13 @@ add_custom_command(
   COMMAND
   powershell -ExecutionPolicy Bypass -File sign-nested.ps1 $<TARGET_FILE:pegoat-authenticode-nested>
 )
+
+add_executable(pegoat-upx-packed goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-upx-packed
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  upx $<TARGET_FILE:pegoat-upx-packed>
+)
