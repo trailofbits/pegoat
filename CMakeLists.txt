@@ -5,6 +5,11 @@ if(NOT MSVC)
     message(FATAL_ERROR "pegoat can only be built on Windows")
 endif()
 
+find_program(PEGOAT_UPX "upx")
+if(NOT PEGOAT_UPX)
+    message(FATAL_ERROR "pegoat needs UPX")
+endif()
+
 add_executable(pegoat goat.cpp)
 
 # An executable with no stack guards.
@@ -83,4 +88,26 @@ add_custom_command(
   WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
   COMMAND
   powershell -ExecutionPolicy Bypass -File sign-nested.ps1 $<TARGET_FILE:pegoat-authenticode-nested>
+)
+
+add_executable(pegoat-upx-packed goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-upx-packed
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  upx $<TARGET_FILE:pegoat-upx-packed>
+)
+
+add_executable(pegoat-upx-packed-authenticode goat.cpp)
+add_custom_command(
+  TARGET
+  POST_BUILD
+  pegoat-upx-packed-authenticode
+  WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
+  COMMAND
+  upx $<TARGET_FILE:pegoat-upx-packed-authenticode>
+  COMMAND
+  powershell -ExecutionPolicy Bypass -File sign.ps1 $<TARGET_FILE:pegoat-upx-packed-authenticode>
 )
